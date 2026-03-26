@@ -13,6 +13,11 @@ func (m TUIInterface) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Input = pages.InitProjectNamePage(m.Services)
 		return m, textinput.Blink
 
+	case tea.WindowSizeMsg:
+		m.WindowWidth = msg.Width
+		m.WindowHeight = msg.Height
+		return m, nil
+
 	case tea.KeyPressMsg:
 		switch msg.String() {
 		case "enter":
