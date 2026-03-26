@@ -5,11 +5,14 @@ import (
 
 	"charm.land/bubbles/v2/textinput"
 )
+
 type TUIInterface struct {
-	Input    textinput.Model
-	Quitting bool
-	Accepted bool
-	Services *services.ServicesStore
+	Input       textinput.Model
+	Quitting    bool
+	Accepted    bool
+	Services    *services.ServicesStore
+	WindowWidth  int
+	WindowHeight int
 }
 
 func NewTUIInterface(servicesStore *services.ServicesStore) TUIInterface {
