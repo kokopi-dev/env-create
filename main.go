@@ -27,6 +27,6 @@ func main() {
 		os.Exit(0)
 	}
 
-	projectName := final.Input.Value()
+	projectName := final.AcceptedValue
 	fmt.Println(styles.ConfirmStyle.Render(projectName))
 }
