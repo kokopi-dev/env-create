@@ -31,25 +31,40 @@ func (m TUIInterface) View() tea.View {
 		h = 24
 	}
 
-	// top content
-	topContent := styles.CardInnerStyle.Render(
-		lipgloss.JoinVertical(lipgloss.Left,
-			styles.CardTitleStyle.Render("✦  env-create"),
-			styles.CardSubtitleStyle.Render("Set up your project environment"),
-			styles.InputLabelStyle.Render("Project name"),
-			m.Input.View(),
-		),
-	)
+	var topContent string
+	var hints string
 
-	// footer content
-	hints := footerHint("enter", "confirm") +
-		footerSep() +
-		footerHint("esc", "cancel") +
-		footerSep() +
-		footerHint("ctrl+c", "quit")
+	if m.Page == "home" {
+		topContent = styles.CardInnerStyle.Render(
+			lipgloss.JoinVertical(lipgloss.Left,
+				styles.CardTitleStyle.Render("✦  env-create"),
+				styles.CardSubtitleStyle.Render("Set up your project environment"),
+				m.Home.View(),
+			),
+		)
+		hints = footerHint("↑↓", "navigate") +
+			footerSep() +
+			footerHint("enter", "select") +
+			footerSep() +
+			footerHint("esc", "quit")
+	} else {
+		topContent = styles.CardInnerStyle.Render(
+			lipgloss.JoinVertical(lipgloss.Left,
+				styles.CardTitleStyle.Render("✦  env-create"),
+				styles.CardSubtitleStyle.Render("Set up your project environment"),
+				styles.InputLabelStyle.Render("Project name"),
+				m.Input.View(),
+			),
+		)
+		hints = footerHint("enter", "confirm") +
+			footerSep() +
+			footerHint("esc", "cancel") +
+			footerSep() +
+			footerHint("ctrl+c", "quit")
+	}
+
 	footer := styles.FooterStyle.Render(hints)
 
-	// entire card
 	card := styles.CardStyle.Render(
 		lipgloss.JoinVertical(lipgloss.Left,
 			topContent,
@@ -57,10 +72,8 @@ func (m TUIInterface) View() tea.View {
 		),
 	)
 
-	// card padding and alignment
 	cardHeight := lipgloss.Height(card)
-
-	topPad := max((h - cardHeight) / 2, 0)
+	topPad := max((h-cardHeight)/2, 0)
 
 	centeredCard := lipgloss.NewStyle().
 		Width(w).
@@ -69,6 +82,6 @@ func (m TUIInterface) View() tea.View {
 		Render(card)
 
 	v := tea.NewView(centeredCard)
-	v.AltScreen = true // overtake the entire terminal
+	v.AltScreen = true
 	return v
 }

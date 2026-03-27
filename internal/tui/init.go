@@ -8,6 +8,6 @@ import (
 
 func (m TUIInterface) Init() tea.Cmd {
 	return func() tea.Msg {
-		return pages.ProjectNamePageMsg{}
+		return pages.HomePageMsg{}
 	}
 }
