@@ -42,6 +42,7 @@ func (m TUIInterface) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
+	// user output
 	var cmd tea.Cmd
 	switch m.Page {
 	case "home":
