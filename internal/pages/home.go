@@ -42,6 +42,14 @@ func (h HomeModel) Update(msg tea.Msg) (HomeModel, tea.Cmd) {
 	return h, nil
 }
 
+func (h HomeModel) Hints() string {
+	sep := styles.FooterSepStyle.Render(" · ")
+	hint := func(key, desc string) string {
+		return styles.FooterKeyStyle.Render(key) + " " + styles.FooterDescStyle.Render(desc)
+	}
+	return hint("↑↓", "navigate") + sep + hint("enter", "select") + sep + hint("esc", "quit")
+}
+
 func (h HomeModel) View() string {
 	var items []string
 	for i, opt := range h.options {
