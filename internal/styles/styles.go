@@ -45,4 +45,7 @@ var (
 	FooterKeyStyle  = lipgloss.NewStyle().Foreground(lipgloss.Color("86")).Bold(true)
 	FooterSepStyle  = lipgloss.NewStyle().Foreground(lipgloss.Color("237"))
 	FooterDescStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("243"))
+
+	InputLabelActiveStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("86")).MarginBottom(1)
+	ErrorStyle            = lipgloss.NewStyle().Foreground(lipgloss.Color("196"))
 )

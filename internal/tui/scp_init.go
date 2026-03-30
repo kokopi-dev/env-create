@@ -7,5 +7,5 @@ import (
 )
 
 func (m ScpTUIInterface) Init() tea.Cmd {
-	return func() tea.Msg { return pages.ScpPageMsg{} }
+	return func() tea.Msg { return pages.ScpCheckCacheMsg{} }
 }

@@ -2,7 +2,10 @@ package pages
 
 import "charm.land/bubbles/v2/textinput"
 
-type ScpPageMsg struct{}
+type ScpPageMsg struct {
+	Prefill     *ScpPrefill
+	SaveConfigs bool
+}
 
 type ScpResultMsg struct {
 	Output string

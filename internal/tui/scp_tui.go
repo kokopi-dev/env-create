@@ -13,14 +13,24 @@ const (
 	fieldCount      = 3
 )
 
+type scpPage int
+
+const (
+	scpPageInit        scpPage = iota
+	scpPageCachePrompt scpPage = iota
+	scpPageForm        scpPage = iota
+	scpPageResult      scpPage = iota
+)
+
 type ScpTUIInterface struct {
 	Inputs       [fieldCount]textinput.Model
 	ActiveField  int
 	Accepted     bool
 	Quitting     bool
-	ShowResult   bool
+	Page         scpPage
 	ResultOutput string
 	ResultErr    error
+	SaveConfigs  bool
 	Services     *services.ServicesStore
 	WindowWidth  int
 	WindowHeight int
