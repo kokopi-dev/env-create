@@ -46,11 +46,11 @@ func (m ScpTUIInterface) View() tea.View {
 			),
 		)
 		footer = styles.FooterStyle.Render(
-			footerHint("y", "save") +
-				footerSep() +
-				footerHint("n", "skip") +
-				footerSep() +
-				footerHint("esc", "cancel"),
+			styles.FooterHint("y", "save") +
+				styles.FooterSep() +
+				styles.FooterHint("n", "skip") +
+				styles.FooterSep() +
+				styles.FooterHint("esc", "cancel"),
 		)
 
 	case scpPageResult:
@@ -75,7 +75,7 @@ func (m ScpTUIInterface) View() tea.View {
 				body,
 			),
 		)
-		footer = styles.FooterStyle.Render(footerHint("enter", "close"))
+		footer = styles.FooterStyle.Render(styles.FooterHint("enter", "close"))
 
 	default: // scpPageForm
 		var rows []string
@@ -97,10 +97,10 @@ func (m ScpTUIInterface) View() tea.View {
 		topContent = styles.CardInnerStyle.Render(lipgloss.JoinVertical(lipgloss.Left, rows...))
 
 		stepHint := styles.FooterDescStyle.Render(fmt.Sprintf("step %d/%d", m.ActiveField+1, fieldCount))
-		hints := footerHint("enter", "next") +
-			footerSep() +
-			footerHint("esc", "cancel") +
-			footerSep() +
+		hints := styles.FooterHint("enter", "next") +
+			styles.FooterSep() +
+			styles.FooterHint("esc", "cancel") +
+			styles.FooterSep() +
 			stepHint
 		footer = styles.FooterStyle.Render(hints)
 	}

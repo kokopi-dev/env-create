@@ -9,6 +9,8 @@ import (
 
 type HomePageMsg struct{}
 
+type SendSelectedMsg struct{}
+
 type HomeModel struct {
 	options []string
 	cursor  int
@@ -33,21 +35,23 @@ func (h HomeModel) Update(msg tea.Msg) (HomeModel, tea.Cmd) {
 				h.cursor++
 			}
 		case "enter":
-			if h.cursor == 0 {
+			switch h.cursor {
+			case 0:
 				return h, func() tea.Msg { return ProjectNamePageMsg{} }
+			case 1:
+				return h, func() tea.Msg { return SendSelectedMsg{} }
 			}
-			return h, tea.Quit
 		}
 	}
 	return h, nil
 }
 
 func (h HomeModel) Hints() string {
-	sep := styles.FooterSepStyle.Render(" · ")
-	hint := func(key, desc string) string {
-		return styles.FooterKeyStyle.Render(key) + " " + styles.FooterDescStyle.Render(desc)
-	}
-	return hint("↑↓", "navigate") + sep + hint("enter", "select") + sep + hint("esc", "quit")
+	return styles.FooterHint("↑↓", "navigate") +
+		styles.FooterSep() +
+		styles.FooterHint("enter", "select") +
+		styles.FooterSep() +
+		styles.FooterHint("esc", "quit")
 }
 
 func (h HomeModel) View() string {

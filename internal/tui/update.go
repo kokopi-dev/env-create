@@ -28,6 +28,12 @@ func (m TUIInterface) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Quitting = true
 		return m, tea.Quit
 
+	case pages.SendSelectedMsg:
+		m.Accepted = true
+		m.AcceptedValue = "send"
+		m.Quitting = true
+		return m, tea.Quit
+
 	// general
 	case tea.WindowSizeMsg:
 		m.WindowWidth = msg.Width

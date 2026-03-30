@@ -48,9 +48,9 @@ func (p ProjectNameModel) View() string {
 }
 
 func (p ProjectNameModel) Hints() string {
-	sep := styles.FooterSepStyle.Render(" · ")
-	hint := func(key, desc string) string {
-		return styles.FooterKeyStyle.Render(key) + " " + styles.FooterDescStyle.Render(desc)
-	}
-	return hint("enter", "confirm") + sep + hint("esc", "cancel") + sep + hint("ctrl+c", "quit")
+	return styles.FooterHint("enter", "confirm") +
+		styles.FooterSep() +
+		styles.FooterHint("esc", "cancel") +
+		styles.FooterSep() +
+		styles.FooterHint("ctrl+c", "quit")
 }

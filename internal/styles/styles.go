@@ -49,3 +49,11 @@ var (
 	InputLabelActiveStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("86")).MarginBottom(1)
 	ErrorStyle            = lipgloss.NewStyle().Foreground(lipgloss.Color("196"))
 )
+
+func FooterHint(key, desc string) string {
+	return FooterKeyStyle.Render(key) + " " + FooterDescStyle.Render(desc)
+}
+
+func FooterSep() string {
+	return FooterSepStyle.Render(" · ")
+}
