@@ -7,16 +7,23 @@ import (
 	lipgloss "charm.land/lipgloss/v2"
 )
 
-func footerHint(key, desc string) string {
-	return styles.FooterKeyStyle.Render(key) +
-		" " +
-		styles.FooterDescStyle.Render(desc)
+type page interface {
+	View() string
+	Hints() string
 }
 
-func footerSep() string {
-	return styles.FooterSepStyle.Render(" · ")
+func (m TUIInterface) activePage() page {
+	switch m.Page {
+	case "home":
+		return m.Pages.Home
+	case "project-name":
+		return m.Pages.ProjectName
+	}
+	return m.Pages.Home
 }
 
+// main render function
+// helps render the overall TUI
 func (m TUIInterface) View() tea.View {
 	if m.Quitting {
 		return tea.NewView("")
@@ -31,25 +38,18 @@ func (m TUIInterface) View() tea.View {
 		h = 24
 	}
 
-	// top content
+	p := m.activePage()
+
 	topContent := styles.CardInnerStyle.Render(
 		lipgloss.JoinVertical(lipgloss.Left,
 			styles.CardTitleStyle.Render("✦  env-create"),
 			styles.CardSubtitleStyle.Render("Set up your project environment"),
-			styles.InputLabelStyle.Render("Project name"),
-			m.Input.View(),
+			p.View(),
 		),
 	)
 
-	// footer content
-	hints := footerHint("enter", "confirm") +
-		footerSep() +
-		footerHint("esc", "cancel") +
-		footerSep() +
-		footerHint("ctrl+c", "quit")
-	footer := styles.FooterStyle.Render(hints)
+	footer := styles.FooterStyle.Render(p.Hints())
 
-	// entire card
 	card := styles.CardStyle.Render(
 		lipgloss.JoinVertical(lipgloss.Left,
 			topContent,
@@ -57,10 +57,8 @@ func (m TUIInterface) View() tea.View {
 		),
 	)
 
-	// card padding and alignment
 	cardHeight := lipgloss.Height(card)
-
-	topPad := max((h - cardHeight) / 2, 0)
+	topPad := max((h-cardHeight)/2, 0)
 
 	centeredCard := lipgloss.NewStyle().
 		Width(w).
@@ -69,6 +67,6 @@ func (m TUIInterface) View() tea.View {
 		Render(card)
 
 	v := tea.NewView(centeredCard)
-	v.AltScreen = true // overtake the entire terminal
+	v.AltScreen = true
 	return v
 }

@@ -13,6 +13,7 @@ import (
 
 func main() {
 	srv := services.NewServicesStore()
+
 	m := tui.NewTUIInterface(srv)
 	p := tea.NewProgram(m)
 
@@ -27,6 +28,19 @@ func main() {
 		os.Exit(0)
 	}
 
-	projectName := final.Input.Value()
-	fmt.Println(styles.ConfirmStyle.Render(projectName))
+	if final.AcceptedValue == "send" {
+		if !srv.Scp.EnvExists() {
+			fmt.Fprintln(os.Stderr, "No .env file found in current directory.")
+			os.Exit(1)
+		}
+		scpM := tui.NewScpTUIInterface(srv)
+		scpP := tea.NewProgram(scpM)
+		_, err := scpP.Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
+
+	fmt.Println(styles.ConfirmStyle.Render(final.AcceptedValue))
 }
