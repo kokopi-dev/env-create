@@ -10,8 +10,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class AppConfig:
-    """env: dev | prod
-    """
+    """env: dev | prod"""
 
     env: str  # "dev" | "prod"
 
@@ -26,7 +25,9 @@ class AppConfig:
         required = ["ENV"]
         missing = [k for k in required if not os.getenv(k)]
         if missing:
-            raise RuntimeError(f"missing required environment variables: {', '.join(missing)}")
+            raise RuntimeError(
+                f"missing required environment variables: {', '.join(missing)}"
+            )
 
         return cls(env=os.getenv("ENV", "dev"))
 
